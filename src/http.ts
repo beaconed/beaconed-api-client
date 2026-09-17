@@ -152,7 +152,7 @@ export async function request<T>(
   }
 
   // Handle 429 — respect Retry-After, cap at 30s, retry once
-  if (response.status === 429) {
+  if (client.retry && response.status === 429) {
     if (!opts.signal?.aborted) {
       const retryAfter = parseRetryAfter(response.headers.get('Retry-After'));
       const waitMs = Math.min((retryAfter ?? 1) * 1000, 30_000);
@@ -181,7 +181,7 @@ export async function request<T>(
   }
 
   // Handle 5xx — exponential backoff with jitter, retry once
-  if (response.status >= 500) {
+  if (client.retry && response.status >= 500) {
     if (!opts.signal?.aborted) {
       const jitter = Math.random() * 200;
       const waitMs = 500 + jitter;

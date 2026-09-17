@@ -34,6 +34,8 @@ export interface BeaconedClientConfig {
   apiKey: string;
   baseUrl?: string;
   userAgent?: string;
+  /** Retry HTTP 429 and 5xx responses once. Defaults to true; set false for callers that must not repeat writes. */
+  retry?: boolean;
   /**
    * Identifies the calling client to the API. Sent as the `X-Client` header,
    * which the server validates (`/^[a-z0-9][a-z0-9._-]{0,63}$/`, lowercased,
@@ -48,6 +50,7 @@ export class BeaconedClient {
   readonly apiKey: string;
   readonly baseUrl: string;
   readonly userAgent: string;
+  readonly retry: boolean;
   readonly clientId: string | undefined;
   readonly products: ProductsResource;
   readonly optimizations: OptimizationsResource;
@@ -65,6 +68,7 @@ export class BeaconedClient {
     this.userAgent =
       config.userAgent ?? `@beaconed/api-client/${VERSION}`;
     this.clientId = config.clientId;
+    this.retry = config.retry ?? true;
     this.products = new ProductsResource(this);
     this.optimizations = new OptimizationsResource(this);
     this.bulkOptimizations = new BulkOptimizationsResource(this);
