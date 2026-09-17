@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3] - 2026-09-17
+
+### Added
+
+- Optional `retry: false` client configuration for hosted callers that must not replay paid or mutating requests after 429 or 5xx responses.
+- Build preparation for Git-based installs.
+
 ## [0.0.1] - 2026-05-19
 
 ### Added

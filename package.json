@@ -1,6 +1,6 @@
 {
   "name": "@beaconed/api-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "TypeScript HTTP client for the Beaconed v1 API",
   "keywords": [
     "beaconed",
