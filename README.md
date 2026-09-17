@@ -28,6 +28,19 @@ console.log(page.data.length, page.pageInfo.total);
 
 Get your API key at [beaconed.ai](https://beaconed.ai) under Settings > API Keys.
 
+## Automatic retries
+
+By default, the client retries HTTP 429 and 5xx responses once, including responses to writes. Network errors are not retried. For callers that must not repeat a potentially billable or state-changing request, disable retries for that client:
+
+```typescript
+const client = new BeaconedClient({
+  apiKey: process.env.BEACONED_API_KEY!,
+  retry: false,
+});
+```
+
+With `retry: false`, the first failed response raises the usual typed error immediately. A failed response does not prove that the server performed no work; inspect the operation's state before deciding whether to try again.
+
 ## API coverage
 
 - **Products** — list, get, create, update, sync, optimize, calculate-score, score history, optimizations
